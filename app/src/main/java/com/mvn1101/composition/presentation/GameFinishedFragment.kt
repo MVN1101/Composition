@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.mvn1101.composition.databinding.FragmentGameFinishedBinding
 import com.mvn1101.composition.domain.entity.GameResult
-import com.mvn1101.composition.domain.entity.GameSettings
-import com.mvn1101.composition.domain.entity.Level
 
-class GameFinishedFragment: Fragment() {
+class GameFinishedFragment : Fragment() {
 
     private lateinit var gameResult: GameResult
 
@@ -34,6 +34,13 @@ class GameFinishedFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                retryGame()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner, callback)
     }
 
     override fun onDestroyView() {
@@ -42,7 +49,15 @@ class GameFinishedFragment: Fragment() {
     }
 
     private fun parseArgs() {
-        gameResult = requireArguments().getSerializable(GameFinishedFragment.KEY_GAME_RESULT) as GameResult
+        gameResult =
+            requireArguments().getSerializable(GameFinishedFragment.KEY_GAME_RESULT) as GameResult
+    }
+
+    private fun retryGame() {
+        requireActivity().supportFragmentManager.popBackStack(
+            GameFragment.NAME,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
     companion object {

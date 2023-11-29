@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.mvn1101.composition.R
 import com.mvn1101.composition.databinding.FragmentGameBinding
 import com.mvn1101.composition.domain.entity.GameResult
@@ -31,6 +32,8 @@ class GameFragment : Fragment() {
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
 
+    private lateinit var viewModel: GameViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseArgs()
@@ -47,9 +50,15 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel =ViewModelProvider(this) [GameViewModel::class.java]
+
+
+
+
         binding.tvSum.setOnClickListener {
             launchGameFinishedFragment(gameResultTest)
         }
+
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {

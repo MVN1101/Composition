@@ -15,4 +15,5 @@ class GenerateQuestionUseCase(
         private const val COUNT_OF_OPTIONS = 6
     }
 
+
 }

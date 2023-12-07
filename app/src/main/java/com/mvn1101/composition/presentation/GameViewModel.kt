@@ -68,7 +68,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         generateQuestion()
     }
 
-    private fun chooseAnswer(number: Int){
+    fun chooseAnswer(number: Int){
         checkAnswer(number)
         updateProgress()
         generateQuestion()
@@ -137,6 +137,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         countOfRightAnswers,
         countOfQuestions,
         gameSettings)
+
     }
 
     override fun onCleared() {

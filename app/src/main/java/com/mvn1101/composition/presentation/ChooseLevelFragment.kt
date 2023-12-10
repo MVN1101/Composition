@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.mvn1101.composition.R
 import com.mvn1101.composition.databinding.FragmentChooseLevelBinding
 import com.mvn1101.composition.databinding.FragmentGameBinding
 import com.mvn1101.composition.domain.entity.Level
 
-class ChooseLevelFragment: Fragment() {
+class ChooseLevelFragment : Fragment() {
 
     private var _binding: FragmentChooseLevelBinding? = null
     private val binding: FragmentChooseLevelBinding
@@ -22,7 +23,7 @@ class ChooseLevelFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentChooseLevelBinding.inflate(inflater, container,false)
+        _binding = FragmentChooseLevelBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -55,18 +56,8 @@ class ChooseLevelFragment: Fragment() {
     }
 
     private fun launchGameFragment(level: Level) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container,GameFragment.newInstance(level))
-            .addToBackStack(GameFragment.NAME)
-            .commit()
-    }
-
-    companion object {
-
-        const val NAME = "ChooseLevelFragment"
-
-        fun newInstance(): ChooseLevelFragment {
-            return ChooseLevelFragment()
-        }
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level)
+        )
     }
 }

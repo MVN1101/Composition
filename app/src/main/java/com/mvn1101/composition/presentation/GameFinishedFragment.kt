@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.mvn1101.composition.R
 import com.mvn1101.composition.databinding.FragmentGameFinishedBinding
-import com.mvn1101.composition.domain.entity.GameResult
 
 class GameFinishedFragment : Fragment() {
 
@@ -25,55 +23,13 @@ class GameFinishedFragment : Fragment() {
     ): View {
         _binding = FragmentGameFinishedBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-        bindViews()
-
-    }
-
-    private fun bindViews() {
         binding.gameResult = args.gameResult
-        with(binding) {
-            emojiResult.setImageResource(getSmileId())
-//            tvRequiredAnswers.text = String.format(
-//                getString(R.string.required_score),
-//                gameResult.gameSettings.minCountOfRightAnswers
-//            )
-//            tvRequiredPercentage.text = String.format(
-//                getString(R.string.required_percentage),
-//                gameResult.gameSettings.minPercentOfRightAnswers
-//            )
-//            tvScoreAnswers.text = String.format(
-//                getString(R.string.score_answers),
-//                gameResult.countOfRightAnswers
-//            )
-            tvScorePercentage.text = String.format(
-                getString(R.string.score_percentage),
-                getPercentOfRightAnswers()
 
-            )
-        }
-    }
-
-    private fun getPercentOfRightAnswers() = with(args.gameResult) {
-            if (countOfRightAnswers == 0) {
-                 0
-            } else {
-                ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
-            }
-        }
-
-
-    private fun getSmileId(): Int {
-        return if (args.gameResult.winner) {
-            R.drawable.ic_smile
-        } else {
-            R.drawable.ic_sad
-        }
     }
 
     private fun setupClickListeners() {
